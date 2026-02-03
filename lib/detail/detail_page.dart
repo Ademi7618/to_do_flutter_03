@@ -94,7 +94,7 @@ class _DetailPageState extends State<DetailPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Column(
                     children: [
-                      Image.asset('assets/image.png', width: 287, height: 226),
+                      Image.asset('images/image.png', width: 287, height: 226),
                       const SizedBox(height: 16),
                       Container(
                         padding: const EdgeInsets.all(16),

@@ -5,6 +5,7 @@ import 'package:to_do_flutter_03/detail/detail_page.dart';
 import 'package:to_do_flutter_03/home/home_state.dart';
 import 'package:to_do_flutter_03/home/home_view_model.dart';
 import 'package:to_do_flutter_03/main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -16,12 +17,29 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   late final HomeCubit cubit;
+  late SharedPreferences prefs;
 
   @override
   void initState() {
     super.initState();
     final vm = HomeViewModel(repo: repository);
     cubit = HomeCubit(vm: vm)..init();
+  }
+
+  Future<void> loadVolue() async {
+    prefs = await SharedPreferences.getInstance();
+
+    print('isDarkThem: ${prefs.getBool('isDarkThem')}');
+    print('pogress: ${prefs.getInt('pogress')}');
+    print('username: ${prefs.getString('username')}');
+  }
+
+  Future<void> saveValue() async {
+     prefs = await SharedPreferences.getInstance();
+
+    prefs.setBool('isDarkThem', false);
+    prefs.setInt('progress', 60);
+    prefs.setString('username', 'Nursultan');
   }
 
   @override
