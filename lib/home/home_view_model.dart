@@ -41,19 +41,10 @@ class HomeCubit extends Cubit<HomeState> {
   List<Todo> _filterByDate(List<Todo> items) {
     return [...items]..sort((a, b) => b.date.compareTo(a.date));
   }
-
-  Future<void> addTest() async {
-    await vm.addTodo(
-      title: "Новая заметка",
-      date: DateTime.now().toString(),
-      description: "",
-    );
-    await init();
-  }
-
+ 
   Future<Todo?> createAndGetNew() async {
     final id = await vm.addTodo(
-      title: "Новая заметка",
+      title: "",
       date: DateTime.now().toString(),
       description: "",
     );
@@ -64,4 +55,9 @@ class HomeCubit extends Cubit<HomeState> {
       return null;
     }
   }
+}
+
+class TodoException implements Exception {
+  final String message;
+  TodoException(this.message);
 }

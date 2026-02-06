@@ -46,26 +46,26 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return BlocProvider.value(
       value: cubit,
-      child: BlocBuilder<HomeCubit, HomeState>(
+      child: BlocConsumer<HomeCubit, HomeState>(
+        listenWhen: (previous, current)=> previous.error != current.error && current!= null,
+        listener:(context, state){
+          ScaffoldMessenger.of(context).showSnackBar(
+           SnackBar(
+            content: Text('Вы не заполнили название задачи!'),
+           )
+          );
+        },
         builder: (context, state) {
           if (state.isLoading) {
             return const Scaffold(
               body: Center(child: CircularProgressIndicator()),
             );
           }
-
-          if (state.error != null) {
-            return Scaffold(
-              body: Center(child: Text('Ошибка: ${state.error}')),
-            );
-          }
-
           return Scaffold(
-            backgroundColor: const Color(0xFFF6F6F6),
+            backgroundColor: const Color(0xFF56856D),
             body: SafeArea(
               child: Column(
                 children: [
-                  /// Заголовок
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
                     child: Column(
@@ -103,7 +103,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
 
-                  /// Список
                   Expanded(
                     child: ListView.builder(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -132,7 +131,6 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
 
-            /// FAB
             floatingActionButton: FloatingActionButton(
               backgroundColor: const Color(0xFF007AFF),
               onPressed: () async {
